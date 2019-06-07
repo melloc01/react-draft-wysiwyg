@@ -28,23 +28,25 @@ export default class Inline extends Component {
       <div className={classNames('rdw-inline-wrapper', config.className)} aria-label="rdw-inline-control">
         {
           config.options
-            .map((style, index) =>
-              (<Option
-                key={index}
-                value={style}
-                onClick={onChange}
-                className={classNames(config[style].className)}
-                active={
-                  currentState[style] === true ||
-                  (style === 'MONOSPACE' && currentState.CODE)
-                }
-                title={config[style].title || translations[`components.controls.inline.${style}`]}
-              >
-                <img
-                  alt=""
-                  src={config[style].icon}
-                />
-              </Option>),
+            .map((style, index) =>{
+              const OptionComponent = config[style].component || Option;
+
+              return (<OptionComponent
+                  key={index}
+                  value={style}
+                  onClick={onChange}
+                  className={classNames(config[style].className)}
+                  active={
+                    currentState[style] === true ||
+                    (style === 'MONOSPACE' && currentState.CODE)
+                  }
+                  title={config[style].title || translations[`components.controls.inline.${style}`]}
+                >
+                  <img
+                    alt=""
+                    src={config[style].icon}
+                  />
+              </OptionComponent>)}
             )
         }
       </div>
